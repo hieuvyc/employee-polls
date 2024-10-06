@@ -1,12 +1,22 @@
-import { RECEIVE_QUESTIONS } from '../actions/questions';
+import {ADD_ANSWER_QUESTION, RECEIVE_QUESTIONS} from '../actions/questions';
 
-// Reducer for managing questions in Redux store
 export default function questions(state = {}, action) {
     switch (action.type) {
         case RECEIVE_QUESTIONS:
             return {
                 ...state,
                 ...action.questions,
+            };
+        case ADD_ANSWER_QUESTION:
+            return {
+                ...state,
+                [action.qid]: {
+                    ...state[action.qid],
+                    [action.answer]: {
+                        ...state[action.qid][action.answer],
+                        votes: state[action.qid][action.answer].votes.concat(action.author)
+                    }
+                }
             };
         default:
             return state;

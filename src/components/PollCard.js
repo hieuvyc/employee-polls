@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import './PollCard.css';
+import {formatDate} from "../utils/helpers";
 
-const PollCard = ({ poll, answered = false, author }) => {
+const PollCard = ({ question, answered = false, author }) => {
     return (
         <div className="poll-card">
             <h3>{author.name} asks:</h3>
@@ -14,8 +16,9 @@ const PollCard = ({ poll, answered = false, author }) => {
                 />
                 <div className="poll-card-info">
                     <h4>Would You Rather...</h4>
-                    <p>{poll.optionOne.text} or ...</p>
-                    <Link to={`/questions/${poll.id}`}>
+                    <p>{question.optionOne.text} or ...</p>
+                    <p>{formatDate(question.timestamp)}</p>
+                    <Link to={`/questions/${question.id}`}>
                         <button className="btn">{answered ? 'View Poll' : 'Answer Poll'}</button>
                     </Link>
                 </div>
@@ -24,13 +27,11 @@ const PollCard = ({ poll, answered = false, author }) => {
     );
 };
 
-// Map state to props for the PollCard component
 const mapStateToProps = (state, ownProps) => {
-    const author = state.users[ownProps.poll.author];
+    const author = state.users[ownProps.question.author];
     return {
         author,
     };
 };
 
-// Use connect to map state to props
 export default connect(mapStateToProps)(PollCard);

@@ -1,67 +1,72 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PollCard from './PollCard';
+import './Dashboard.css';
 
 const Dashboard = (props) => {
-    const { answeredPolls, unansweredPolls, loading } = props;
+    const { authedUser, questions, users, loading } = props;
 
-    // Show a loading state while the data is being fetched
+    const isAnswered = (question, authedUser) => {
+        return (
+            question.optionOne.votes.includes(authedUser) ||
+            question.optionTwo.votes.includes(authedUser)
+        );
+    };
+
+    const unanswered = Object.values(questions).filter(
+        (question) => !isAnswered(question, authedUser)
+    );
+
+    const answered = Object.values(questions).filter(
+        (question) => isAnswered(question, authedUser)
+    );
+
+    console.log('unanswered', unanswered);
+    console.log('answered', answered);
+
     if (loading) {
         return <div>Loading...</div>;
     }
 
     return (
-        <div>
-            <h2>New Questions</h2>
-            {unansweredPolls.length === 0 ? (
-                <p>No new questions</p>
-            ) : (
-                unansweredPolls.map((poll) => (
-                    <PollCard key={poll.id} poll={poll} />
-                ))
-            )}
-            <h2>Done</h2>
-            {answeredPolls.length === 0 ? (
-                <p>No answered questions</p>
-            ) : (
-                answeredPolls.map((poll) => (
-                    <PollCard key={poll.id} poll={poll} answered />
-                ))
-            )}
+        <div className="dashboard-container">
+            <div className="dashboard-column">
+                <h2>New Questions</h2>
+                {unanswered.length === 0 ? (
+                    <p>No new questions</p>
+                ) : (
+                    <ul>
+                        {unanswered.map((question) => (
+                            <li key={question.id}>
+                                <PollCard question={question} author={users[question.author]} />
+                            </li>
+                        ))}
+                    </ul>
+                )}
+            </div>
+
+            <div className="dashboard-column">
+                <h2>Done</h2>
+                {answered.length === 0 ? (
+                    <p>No answered questions</p>
+                ) : (
+                    <ul>
+                        {answered.map((question) => (
+                            <li key={question.id}>
+                                <PollCard question={question} author={users[question.author]} answered={true}/>
+                            </li>
+                        ))}
+                    </ul>
+                )}
+            </div>
         </div>
     );
 };
 
-// Map state to props for the Dashboard component
-const mapStateToProps = (state) => {
-    const { authedUser, polls, users } = state;
-
-    // Check if polls, users, or authedUser exist, return loading state if not available
-    if (!polls || !users || !authedUser) {
-        return {
-            answeredPolls: [],
-            unansweredPolls: [],
-            loading: true,
-        };
-    }
-
-    // Check if authedUser has any answers
-    const userAnswers = users[authedUser].answers || {};
-
-    const answeredIds = Object.keys(userAnswers);
-    const answeredPolls = answeredIds
-        .filter((id) => polls[id]) // Check if poll exists before mapping
-        .map((id) => polls[id]);
-
-    const unansweredPolls = Object.keys(polls)
-        .filter((id) => !answeredIds.includes(id)) // Only include polls that are not answered
-        .map((id) => polls[id]);
-
-    return {
-        answeredPolls,
-        unansweredPolls,
-        loading: false,
-    };
-};
+const mapStateToProps = ({ authedUser, questions, users }) => ({
+    authedUser,
+    questions: Object.values(questions).sort((a, b) => b.timestamp - a.timestamp),
+    users,
+});
 
 export default connect(mapStateToProps)(Dashboard);

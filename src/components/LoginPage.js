@@ -6,24 +6,20 @@ import { useNavigate } from 'react-router-dom';
 import './App.css';
 
 const LoginPage = (props) => {
-    const [userId, setUserId] = useState('tylermcginnis');
-    const [password, setPassword] = useState('abc321');
+    const [userId, setUserId] = useState('sarahedo');
+    const [password, setPassword] = useState('password123');
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    // Function to handle login submission
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        // Get users data
         const users = await _getUsers();
 
-        // Check if userId exists and password matches
         if (users[userId] && users[userId].password === password) {
-            props.setAuthedUser(userId); // Set the logged-in user in Redux store
-            navigate('/'); // Redirect to the dashboard or home page
+            props.setAuthedUser(userId);
+            navigate('/');
         } else {
-            setError('Invalid username or password'); // Set error if login fails
+            setError('Invalid username or password');
         }
     };
 
@@ -65,12 +61,10 @@ const LoginPage = (props) => {
     );
 };
 
-// Map dispatch to props
 const mapDispatchToProps = (dispatch) => {
     return {
         setAuthedUser: (id) => dispatch(setAuthedUser(id)),
     };
 };
 
-// Use connect to map dispatch to props
 export default connect(null, mapDispatchToProps)(LoginPage);

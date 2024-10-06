@@ -27,7 +27,6 @@ const NavBar = (props) => {
     );
 };
 
-// Map state to props
 const mapStateToProps = (state) => {
     const authedUser = state.authedUser;
     const user = state.users[authedUser];
@@ -38,12 +37,10 @@ const mapStateToProps = (state) => {
     };
 };
 
-// Map dispatch to props
 const mapDispatchToProps = (dispatch) => {
     return {
         setAuthedUser: (id) => dispatch(setAuthedUser(id)),
     };
 };
 
-// Use connect to map state and dispatch to props
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

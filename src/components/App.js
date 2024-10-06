@@ -4,7 +4,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { handleInitialData } from '../actions/shared';
 import LoginPage from './LoginPage';
 import Dashboard from './Dashboard';
-// import PollPage from './PollPage';
+import PollPage from './PollPage';
 // import PollCreationPage from './PollCreationPage';
 // import LeaderboardPage from './LeaderboardPage';
 import NavBar from './NavBar';
@@ -20,18 +20,16 @@ const App = (props) => {
   return (
       <div className="App">
         {!authedUser ? (
-            // If no user is authenticated, show the login page
             <Routes>
               <Route path="*" element={<LoginPage />} />
             </Routes>
         ) : (
-            // If user is authenticated, show the app with routes
             <>
               <NavBar />
               {loading ? null : (
                   <Routes>
                     <Route path="/" element={<Dashboard />} />
-                    {/*<Route path="/questions/:question_id" element={<PollPage />} />*/}
+                    <Route path="/questions/:question_id" element={<PollPage />} />
                     {/*<Route path="/add" element={<PollCreationPage />} />*/}
                     {/*<Route path="/leaderboard" element={<LeaderboardPage />} />*/}
                     <Route path="*" element={<Navigate to="/" />} />
