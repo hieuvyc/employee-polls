@@ -18,6 +18,7 @@ const PollCreationPage = (props) => {
     return (
         <div className="poll-creation-container">
             <h3>Create New Poll</h3>
+            <h4>Would You Rather...</h4>
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"

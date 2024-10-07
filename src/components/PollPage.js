@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { handleSaveAnswer } from '../actions/shared';
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import {Navigate, useLocation, useNavigate, useParams} from "react-router-dom";
 import '../css/PollPage.css';
 
 const withRouter = (ComponentWithRouterProp) => {
@@ -15,6 +15,10 @@ const withRouter = (ComponentWithRouterProp) => {
 
 const PollPage = ({ authedUser, question, author, dispatch }) => {
     const navigate = useNavigate();
+
+    if (!authedUser || !question || !author) {
+        return <Navigate to="/not-found"/>;
+    }
 
     const hasVotedOptionOne = question.optionOne.votes.includes(authedUser);
     const hasVotedOptionTwo = question.optionTwo.votes.includes(authedUser);
@@ -73,15 +77,19 @@ const PollPage = ({ authedUser, question, author, dispatch }) => {
 };
 
 const mapStateToProps = ({ authedUser, questions, users }, props) => {
-    const { question_id } = props.router.params;
-    const question = questions[question_id];
-    const author = question ? users[question.author] : null;
+    try {
+        const { question_id } = props.router.params;
+        const question = questions[question_id];
+        const author = question ? users[question.author] : null;
 
-    return {
-        authedUser,
-        question,
-        author
-    };
+        return {
+            authedUser,
+            question,
+            author
+        };
+    } catch (e) {
+        return <Navigate to="/not-found"/>;
+    }
 };
 
 export default withRouter(connect(mapStateToProps)(PollPage));
