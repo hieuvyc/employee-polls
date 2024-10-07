@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setAuthedUser } from '../actions/authedUser';
-import './NavBar.css';
+import '../css/NavBar.css';
 
 const NavBar = (props) => {
     const { user, setAuthedUser } = props;

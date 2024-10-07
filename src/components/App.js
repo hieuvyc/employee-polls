@@ -6,9 +6,9 @@ import LoginPage from './LoginPage';
 import Dashboard from './Dashboard';
 import PollPage from './PollPage';
 import PollCreationPage from './PollCreationPage';
-// import LeaderboardPage from './LeaderboardPage';
+import LeaderboardPage from './LeaderboardPage';
 import NavBar from './NavBar';
-import './App.css';
+import '../css/App.css';
 import NotFound from "./NotFound";
 
 const App = (props) => {
@@ -32,7 +32,7 @@ const App = (props) => {
                     <Route path="/" element={<Dashboard />} />
                     <Route path="/questions/:question_id" element={<PollPage />} />
                     <Route path="/add" element={<PollCreationPage />} />
-                    {/*<Route path="/leaderboard" element={<LeaderboardPage />} />*/}
+                    <Route path="/leaderboard" element={<LeaderboardPage />} />
                     <Route path="*" element={<Navigate to="/" />} />
                     <Route path="/not-found" exact element={<NotFound/>}/>
                   </Routes>

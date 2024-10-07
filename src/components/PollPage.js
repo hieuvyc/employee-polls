@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { handleSaveAnswer } from '../actions/shared';
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import './PollPage.css';
+import '../css/PollPage.css';
 
 const withRouter = (ComponentWithRouterProp) => {
     return (props) => {

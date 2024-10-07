@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PollCard from './PollCard';
-import './Dashboard.css';
+import '../css/Dashboard.css';
 
 const Dashboard = (props) => {
     const { authedUser, questions, users, loading } = props;

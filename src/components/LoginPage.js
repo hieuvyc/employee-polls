@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { setAuthedUser } from '../actions/authedUser';
 import { _getUsers } from '../utils/_DATA';
 import { useNavigate } from 'react-router-dom';
-import './App.css';
+import '../css/App.css';
 
 const LoginPage = (props) => {
     const [userId, setUserId] = useState('sarahedo');

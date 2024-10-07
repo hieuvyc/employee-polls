@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { handleSaveQuestion } from '../actions/shared';
 import { useNavigate } from 'react-router-dom';
-import './PollCreationPage.css';
+import '../css/PollCreationPage.css';
 
 const PollCreationPage = (props) => {
     const [optionOne, setOptionOne] = useState('');

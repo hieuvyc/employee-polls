@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import './PollCard.css';
+import '../css/PollCard.css';
 import {formatDate} from "../utils/helpers";
 
 const PollCard = ({ question, answered = false, author }) => {
