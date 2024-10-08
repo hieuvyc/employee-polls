@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { handleInitialData } from '../actions/shared';
 import LoginPage from './LoginPage';
 import Dashboard from './Dashboard';
@@ -10,9 +10,10 @@ import LeaderboardPage from './LeaderboardPage';
 import NavBar from './NavBar';
 import '../css/App.css';
 import NotFound from "./NotFound";
+import Protected from "./Protected";
 
 const App = (props) => {
-  const { authedUser, loading, dispatch } = props;
+  const { authedUser, dispatch } = props;
 
   useEffect(() => {
     dispatch(handleInitialData());
@@ -20,25 +21,17 @@ const App = (props) => {
 
   return (
       <div className="App">
-        {!authedUser ? (
-            <Routes>
-              <Route path="*" element={<LoginPage />} />
-            </Routes>
-        ) : (
             <>
-              <NavBar />
-              {loading ? null : (
+              { authedUser && <NavBar /> }
                   <Routes>
-                    <Route path="/" element={<Dashboard />} />
-                    <Route path="/questions/:question_id" element={<PollPage />} />
-                    <Route path="/add" element={<PollCreationPage />} />
-                    <Route path="/leaderboard" element={<LeaderboardPage />} />
-                    <Route path="*" element={<Navigate to="/" />} />
-                    <Route path="/not-found" element={<NotFound/>}/>
+                    <Route path="*" element={<LoginPage />} />
+                    <Route path="/" element={<Protected><Dashboard /></Protected>} />
+                    <Route path="/questions/:question_id" element={<Protected><PollPage /></Protected>} />
+                    <Route path="/add" exact element={<Protected><PollCreationPage /></Protected>} />
+                    <Route path="/leaderboard" exact element={<Protected><LeaderboardPage /></Protected>} />
+                    <Route path="/not-found" exact element={<NotFound/>}/>
                   </Routes>
-              )}
             </>
-        )}
       </div>
   );
 };

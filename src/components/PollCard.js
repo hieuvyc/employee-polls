@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import '../css/PollCard.css';
 import {formatDate} from "../utils/helpers";
 
-const PollCard = ({ question, answered = false, author }) => {
+const PollCard = ({ question, author }) => {
     return (
         <div className="poll-card">
             <h3>{author.name} asks:</h3>
@@ -19,7 +19,7 @@ const PollCard = ({ question, answered = false, author }) => {
                     <p>{question.optionOne.text} or ...</p>
                     <p>{formatDate(question.timestamp)}</p>
                     <Link to={`/questions/${question.id}`}>
-                        <button className="btn">{answered ? 'View Poll' : 'Answer Poll'}</button>
+                        <button className="btn">Show</button>
                     </Link>
                 </div>
             </div>

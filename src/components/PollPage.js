@@ -48,7 +48,7 @@ const PollPage = ({ authedUser, question, author, dispatch }) => {
                 <img src={author.avatarURL} alt="avatar" className="avatar" />
                 <h4>Would You Rather</h4>
                 <div className="poll-options">
-                    <button
+                    <button className={hasVotedOptionOne ? "voted-background" : ""}
                         onClick={() => onVote('optionOne')}
                         disabled={hasVoted}
                     >
@@ -59,7 +59,7 @@ const PollPage = ({ authedUser, question, author, dispatch }) => {
                             </span>
                         )}
                     </button>
-                    <button
+                    <button className={hasVotedOptionTwo ? "voted-background" : ""}
                         onClick={() => onVote('optionTwo')}
                         disabled={hasVoted}
                     >

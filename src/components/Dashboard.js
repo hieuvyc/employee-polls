@@ -46,14 +46,14 @@ const Dashboard = (props) => {
             </div>
 
             <div className="dashboard-column">
-                <h2>Done</h2>
+                <h2>Answered Questions</h2>
                 {answered.length === 0 ? (
                     <p>No answered questions</p>
                 ) : (
                     <ul>
                         {answered.map((question) => (
                             <li key={question.id}>
-                                <PollCard question={question} author={users[question.author]} answered={true}/>
+                                <PollCard question={question} author={users[question.author]}/>
                             </li>
                         ))}
                     </ul>

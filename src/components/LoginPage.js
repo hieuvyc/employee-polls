@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import { connect } from 'react-redux';
 import { setAuthedUser } from '../actions/authedUser';
 import { _getUsers } from '../utils/_DATA';
-import { useNavigate } from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import '../css/App.css';
 
 const LoginPage = (props) => {
@@ -10,6 +10,7 @@ const LoginPage = (props) => {
     const [password, setPassword] = useState('password123');
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const { state } = useLocation();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -17,7 +18,7 @@ const LoginPage = (props) => {
 
         if (users[userId] && users[userId].password === password) {
             props.setAuthedUser(userId);
-            navigate('/');
+            navigate(state?.path || "/");
         } else {
             setError('Invalid username or password');
         }
