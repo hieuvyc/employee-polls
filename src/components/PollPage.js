@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { handleSaveAnswer } from '../actions/shared';
-import {Navigate, useLocation, useNavigate, useParams} from "react-router-dom";
+import { Navigate, useLocation, useNavigate, useParams } from "react-router-dom";
 import '../css/PollPage.css';
 
 const withRouter = (ComponentWithRouterProp) => {
@@ -14,7 +14,6 @@ const withRouter = (ComponentWithRouterProp) => {
 };
 
 const PollPage = ({ authedUser, question, author, dispatch }) => {
-    const navigate = useNavigate();
 
     if (!authedUser || !question || !author) {
         return <Navigate to="/not-found"/>;
@@ -34,12 +33,7 @@ const PollPage = ({ authedUser, question, author, dispatch }) => {
 
     const onVote = (option) => {
         dispatch(handleSaveAnswer(question.id, option));
-        navigate('/');
     };
-
-    if (!question || !authedUser) {
-        return <p>This poll does not exist</p>;
-    }
 
     return (
         <div>
@@ -49,8 +43,8 @@ const PollPage = ({ authedUser, question, author, dispatch }) => {
                 <h4>Would You Rather</h4>
                 <div className="poll-options">
                     <button className={hasVotedOptionOne ? "voted-background" : ""}
-                        onClick={() => onVote('optionOne')}
-                        disabled={hasVoted}
+                            onClick={() => onVote('optionOne')}
+                            disabled={hasVoted}
                     >
                         {question.optionOne.text}
                         {hasVoted && (
@@ -60,8 +54,8 @@ const PollPage = ({ authedUser, question, author, dispatch }) => {
                         )}
                     </button>
                     <button className={hasVotedOptionTwo ? "voted-background" : ""}
-                        onClick={() => onVote('optionTwo')}
-                        disabled={hasVoted}
+                            onClick={() => onVote('optionTwo')}
+                            disabled={hasVoted}
                     >
                         {question.optionTwo.text}
                         {hasVoted && (
@@ -88,7 +82,11 @@ const mapStateToProps = ({ authedUser, questions, users }, props) => {
             author
         };
     } catch (e) {
-        return <Navigate to="/not-found"/>;
+        return {
+            authedUser: null,
+            question: null,
+            author: null
+        };
     }
 };
 
