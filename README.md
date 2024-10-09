@@ -3,6 +3,7 @@ author: Hieu Tran
 How to start the application
 - Install all project dependencies with `npm install`
 - Start the development server with `npm start`
+- Start unit test `npm test`
 
 Employee Polls Project Overview:
 The Employee Polls application is an internal tool designed for employees to create and participate in polls. The main goal of this project is to enhance collaboration and transparency within the company by allowing employees to interact with one another through poll-based questions. The polls consist of two proposed solutions for a specific question, and employees can vote on their preferred option. Additionally, a leaderboard is maintained to promote healthy competition, showcasing which employees have created and answered the most polls.
